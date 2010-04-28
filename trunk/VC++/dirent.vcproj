@@ -179,6 +179,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\readdir.c"
+				>
+			</File>
+			<File
+				RelativePath="..\readdir_r.c"
+				>
+			</File>
+			<File
 				RelativePath="..\rewinddir.c"
 				>
 			</File>
