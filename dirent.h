@@ -56,6 +56,10 @@ extern "C" {
 		int dirfd(DIR *dirp);
 	#endif /*** BSD 4.3 EXTENSION ***/
 
+	/*****
+		opendir()
+		conforming to SVr4, 4.3BSD, POSIX.1-2001.
+	*****/
 	DIRENT_API
 	DIR *opendir(const char *dirname);
 
@@ -66,6 +70,10 @@ extern "C" {
 	DIRENT_API
 	struct dirent *	readdir(DIR *dirp);
 
+	/*****
+		readdir()
+		conforming to SVr4, 4.3BSD, POSIX.1-2001.
+	*****/
 	DIRENT_API
 	int readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result);
 
