@@ -37,7 +37,7 @@ extern "C" {
 		int ret = EBADF;
 
 		if(dirp && out && result)
-			if(dirp->hnd != -1) {
+			if(dirp->hnd != -1 && !dirp->end_of_stream) {
 
 				ret = 0;
 			
@@ -47,17 +47,17 @@ extern "C" {
 
 				strncpy_s(out->d_name, out->d_namlen+1, dirp->fileinfo.name, out->d_namlen+1);
 
-				if(dirp->fileinfo.attrib & _A_NORMAL)
+				if(dirp->fileinfo.attrib & _A_SUBDIR)
 					out->d_type = DT_DIR;
 				else
 					out->d_type = DT_REG;
 
-				if(_findnext( dirp->hnd, &(dirp->fileinfo)) == 0) {
+				if(_findnext( dirp->hnd, &(dirp->fileinfo)) != 0)
+					dirp->end_of_stream = 1;
 			
-					++(dirp->telldir);
-					*result = out;
-					return ret;
-				}
+				++(dirp->telldir);
+				*result = out;
+				return ret;
 			}
 		
 		if(result)
