@@ -1,5 +1,5 @@
 
-#include "dirent.h"
+#include <dirent.h>
 
 #include<stdio.h>
 
@@ -19,8 +19,8 @@ int main(int argc, char **argv) {
 	rewinddir(dir);
 
 	// Dump current directory using reentrant readdir_r ( uses user allocated storage )
-	while(readdir_r(dir, dirent_r, &dirent) == 0)
-		printf("%3d %s %s\n", telldir(dir), dirent->d_type & DT_DIR ? "FOLDER" : "FILE  ", dirent->d_name );
+	while((readdir_r(dir, dirent_r, &dirent) == 0) && dirent)
+			printf("%3d %s %s\n", telldir(dir), dirent->d_type & DT_DIR ? "FOLDER" : "FILE  ", dirent->d_name );
 
 	closedir(dir);
 
