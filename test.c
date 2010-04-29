@@ -25,58 +25,24 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 *******************************************************************************/
 
+#include "dirent.h"
 
-#include "dirent_intern.h"
+#include<stdio.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+int main(int argc, char **argv) {
 
-	DIRENT_API
-	DIR *opendir(const char *dirname) {
-
-		DIR *dir=NULL;
-		int  dirname_len = 0;
-
-		if(!dirname)
-			return NULL;
-
-		if(!dirname[0])
-			return NULL;
-
-		if((dir = (DIR*)malloc(sizeof *dir)) == NULL)
-			return NULL;
-
-		memset(dir,0,sizeof *dir);
-
-		dir->hnd = -1;
-
-		dirname_len = strlen(dirname);
-
-		if((dir->findstr = (char*)malloc(dirname_len + 3))) {
-			
-				strncpy_s(dir->findstr, dirname_len+3, dirname,dirname_len+3);
-
-				if(dir->findstr[dirname_len-1] == '\\' || dir->findstr[dirname_len-1] == '/')
-					strcat_s(dir->findstr,dirname_len + 3,"*");
-				else
-					strcat_s(dir->findstr,dirname_len + 3,"\\*");
-
-				dir->hnd = _findfirst( dir->findstr, &(dir->fileinfo));
-			}
-		
-		if(dir && (dir->hnd != -1))
-			return dir;
-
-		if(dir) {
-			free(dir->findstr);
-			free(dir);
-		}
-
-		return NULL;
+	struct dirent *dirent;
+	DIR* dir = opendir(".");
+	
+	while((dirent = readdir(dir)))
+	{
+		printf("%d %s %s\n", telldir(dir), dirent->d_name, dirent->d_type & DT_DIR ? "FOLDER" : "FILE" );
 	}
 
-#ifdef __cplusplus
-}	/*** extern "C" ***/
-#endif
+	closedir(dir);
+
+	getchar();
+
+	return 0;
+}
 
