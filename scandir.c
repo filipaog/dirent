@@ -31,20 +31,65 @@ POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
-	DIRENT_API
-	int closedir(DIR *dirp) {
+	// deep copy struct dirent
+	static struct dirent* new_dirent(struct dirent** dptr, const struct dirent *src) {
 
-		int err = -1;
-		if(dirp) {
-			err = _findclose(dirp->hnd);
-			if(dirp->g_dirent) {
-				free(dirp->g_dirent->d_name);
-				free(dirp->g_dirent);
+		struct dirent *dirent = NULL;
+
+		if((dirent = malloc(sizeof(struct dirent)))) {
+			
+			*dirent = *src;
+			if((dirent->d_name = malloc(dirent->d_namlen+1))) {
+				strcpy_s(dirent->d_name, dirent->d_namlen+1, src->d_name);
+				*dptr = dirent;
 			}
-			free(dirp->findstr);
-			free(dirp);
+			else {
+				free(dirent);
+				dirent = NULL;
+			}
 		}
-		return err;
+		return dirent;
+	}
+
+	DIRENT_API
+	int scandir(const char *dir_str, 
+		struct dirent ***namelist,
+		int(*filter)(const struct dirent *),
+		int(*compar)(const struct dirent **, const struct dirent**) )
+	{
+		DIR *dir;
+		int len=0;
+		struct dirent *dirent;
+
+		if(!namelist)
+			return -1;
+
+		*namelist = NULL;
+
+		if(!(dir = opendir(dir_str)))
+			return -1;
+		
+		while(dirent = readdir(dir))
+			if(filter && !filter(dirent))
+				continue;
+			else if((*namelist = realloc(*namelist, sizeof(struct dirent*) * (len+1)))==NULL)
+				goto exit_err; /* fixme: leak on ENOMEM */
+			else if(!new_dirent(*namelist + len, dirent))
+				goto exit_err;
+			else
+				++len;
+
+		if(compar)
+			qsort(*namelist,len,sizeof(struct dirent*), compar);
+
+		closedir(dir);
+
+		return len;
+
+exit_err:
+		/*** TODO: CLEANUP ***/
+		closedir(dir);
+		return -1;
 	}
 
 #ifdef __cplusplus

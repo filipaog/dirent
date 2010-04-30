@@ -46,6 +46,7 @@ extern "C" {
 		long	telldir;
 		char *findstr;
 		char end_of_stream;
+		struct dirent *g_dirent;
 	};
 
 #ifdef __cplusplus
