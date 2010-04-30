@@ -128,6 +128,15 @@ extern "C" {
 		long telldir(DIR *dirp);
 	#endif
 
+	/*****
+		scandir()
+		conforming to 4.3BSD
+	*****/
+	DIRENT_API
+	int scandir(const char *dir, 
+			struct dirent ***namelist,int(*filter)(const struct dirent *),
+			int(*compar)(const struct dirent **, const struct dirent**) );	
+	
 
 #ifdef __cplusplus
 } /*** extern "C" ***/

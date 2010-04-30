@@ -31,41 +31,47 @@ POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
+	// win32 debug builds don't zero allocated mem!
+	static void* zmalloc(int sz) {
+
+		void* out;
+		if((out = malloc(sz)))
+			memset(out,0,sz);
+		return out;
+	}
+
 	DIRENT_API
 	struct dirent *	readdir(DIR *dirp) {
 
-		struct dirent *out = NULL;
 
 		if(dirp)
 			if(dirp->hnd != -1)
 				if(dirp->end_of_stream) {
 					return NULL;
 				}
-				else if((out = (struct dirent*)malloc(sizeof *out))) {
+				else if( dirp->g_dirent || (dirp->g_dirent = (struct dirent*)zmalloc(sizeof *(dirp->g_dirent)))) {
 
-					out->d_namlen = strlen(dirp->fileinfo.name);
+					int d_namelen = strlen(dirp->fileinfo.name);
 
-					if((out->d_name = (char*)malloc( out->d_namlen +1))) {
+					if( d_namelen > dirp->g_dirent->d_namlen )
+						dirp->g_dirent->d_namlen = d_namelen;
 
-						strncpy_s(out->d_name, out->d_namlen+1, dirp->fileinfo.name, out->d_namlen+1);
+					if((dirp->g_dirent->d_name = (char*)realloc( dirp->g_dirent->d_name, dirp->g_dirent->d_namlen +1))) {
+
+						strncpy_s(dirp->g_dirent->d_name, dirp->g_dirent->d_namlen+1, dirp->fileinfo.name, dirp->g_dirent->d_namlen+1);
 
 						if(dirp->fileinfo.attrib & _A_SUBDIR)
-							out->d_type = DT_DIR;
+							dirp->g_dirent->d_type = DT_DIR;
 						else
-							out->d_type = DT_REG;
+							dirp->g_dirent->d_type = DT_REG;
 
 						if(_findnext( dirp->hnd, &(dirp->fileinfo)) == -1)
 							dirp->end_of_stream = 1; // TODO: check errno
 	
 						++(dirp->telldir);
-						return out;
+						return dirp->g_dirent;
 					}
 				}
-		
-		if(out)
-			free(out->d_name);
-
-		free(out);
 
 		return NULL;
 	}

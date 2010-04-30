@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="DIRENT_EXPORTS"
+				PreprocessorDefinitions="WIN32;_DEBUG;DIRENT_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -116,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="DIRENT_EXPORTS"
+				PreprocessorDefinitions="WIN32;DIRENT_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -191,6 +191,10 @@
 			</File>
 			<File
 				RelativePath="..\rewinddir.c"
+				>
+			</File>
+			<File
+				RelativePath="..\scandir.c"
 				>
 			</File>
 			<File
