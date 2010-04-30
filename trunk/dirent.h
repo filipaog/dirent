@@ -136,6 +136,13 @@ extern "C" {
 	int scandir(const char *dir, 
 			struct dirent ***namelist,int(*filter)(const struct dirent *),
 			int(*compar)(const struct dirent **, const struct dirent**) );	
+
+	/*****
+		alphasort()
+		conforming to 4.3 BSD
+	*****/
+	DIRENT_API
+	int alphasort(const void *a, const void *b);
 	
 
 #ifdef __cplusplus

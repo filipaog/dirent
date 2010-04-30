@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
 
 	closedir(dir);
 
-	len = scandir(".", &namelist, NULL, NULL);
+	len = scandir(".", &namelist, NULL, alphasort);
 
 	for(i=0;i<len;++i)
 		printf("%3d %s %s\n", i+1, namelist[i]->d_type & DT_DIR ? "FOLDER" : "FILE  ", namelist[i]->d_name );
