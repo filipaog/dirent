@@ -213,6 +213,10 @@
 				RelativePath="..\telldir.c"
 				>
 			</File>
+			<File
+				RelativePath="..\versionsort.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

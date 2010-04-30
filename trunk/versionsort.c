@@ -31,8 +31,14 @@ POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
+	static __inline int isnum(char c) {
+		return c >= '0' && c <= '9' ;
+	}
+
 	DIRENT_API
-	int alphasort(const void *a, const void *b) {
+		int versionsort(const void *a, const void *b) {
+
+			/** TODO **/
 
 			return strcmp(
 				(*(const struct dirent **)a)->d_name, 

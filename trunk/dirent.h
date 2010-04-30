@@ -143,6 +143,13 @@ extern "C" {
 	*****/
 	DIRENT_API
 	int alphasort(const void *a, const void *b);
+
+	/*****
+	versionsort()
+	GNU Extension
+	*****/
+	DIRENT_API
+	int versionsort(const void *a, const void *b);
 	
 
 #ifdef __cplusplus
