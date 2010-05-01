@@ -35,17 +35,50 @@ extern "C" {
 		return c >= '0' && c <= '9' ;
 	}
 
+	// position of last '.' or negative.
+	static __inline int lastdotpos(const char *c) {
+
+		int n=strlen(c);
+		while(--n>=0)
+			if(c[n]=='.')
+				break;
+		return n;
+	}
+
+	// (position of last non extension non-numeric) or negative
+	static __inline int lastcharpos(const char *c, int n) {
+
+		while(--n>=0)
+			if(!isnum(c[n]))
+				break;
+		return n;
+	}
+
 	DIRENT_API
-		int versionsort(const void *a, const void *b) {
+	int versionsort(const void *da, const void *db) {
 
-			/** TODO **/
+		int aldp,bldp,alcp,blcp;
 
-			return strcmp(
-				(*(const struct dirent **)a)->d_name, 
-				(*(const struct dirent **)b)->d_name);
+		const char *a = (*(const struct dirent **)da)->d_name;
+		const char *b = (*(const struct dirent **)db)->d_name;
+
+		aldp=lastdotpos(a);
+		bldp=lastdotpos(b);
+		alcp=lastcharpos(a,aldp);
+		blcp=lastcharpos(b,bldp);
+
+		if((((alcp>=-1) && (alcp != (aldp-1)))) &&
+			(((blcp>=-1) && (blcp != (bldp-1)))) &&
+				((alcp == blcp)) &&
+					((strncmp(a,b,alcp+1)==0))) {
+			return atoi(a+alcp+1) < atoi(b+blcp+1);
+		}
+
+		return strcmp(a,b);
 	}
 
 #ifdef __cplusplus
 }	/*** extern "C" ***/
 #endif
+
 
