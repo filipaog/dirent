@@ -25,16 +25,15 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 *******************************************************************************/
 
+#ifndef _4FD631B9_C404_4ebb_A5E4_4341C3924C06
+#define _4FD631B9_C404_4ebb_A5E4_4341C3924C06
 
 #include "dirent.h"
-
 #include <errno.h>
-#include <io.h>
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef _4FD631B9_C404_4ebb_A5E4_4341C3924C06
-#define _4FD631B9_C404_4ebb_A5E4_4341C3924C06
+#include <io.h>
 
 #ifdef __cplusplus
 extern "C" {
