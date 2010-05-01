@@ -36,11 +36,12 @@ extern "C" {
 
 		int ret = EBADF;
 
-		if(dirp && out && result)
-			if(dirp->hnd != -1 && !dirp->end_of_stream) {
+		if(dirp && out && result && (dirp->hnd != -1)) {
 
-				ret = 0;
+			ret = 0;
 			
+			if(!dirp->end_of_stream) {
+
 				out->d_name = (char*)(out + 1);
 
 				out->d_namlen = strlen(dirp->fileinfo.name);
@@ -59,6 +60,7 @@ extern "C" {
 				*result = out;
 				return ret;
 			}
+		}
 		
 		if(result)
 			*result = NULL;

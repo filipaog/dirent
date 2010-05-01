@@ -26,22 +26,28 @@ POSSIBILITY OF SUCH DAMAGE.
 *******************************************************************************/
 
 #include <errno.h>
-#include <io.h>
+#if defined(WIN32)
+	#include <io.h>
+#endif
 #include <stdlib.h>
 #include <string.h>
 
 #ifndef _DF4A9F29_043F_44a4_BB11_49AC14C8BCC4
 #define _DF4A9F29_043F_44a4_BB11_49AC14C8BCC4
 
+#if defined(WIN32)
+	#if defined(DIRENT_EXPORTS)
+			#define DIRENT_API __declspec(dllexport)
+	#else
+			#define DIRENT_API __declspec(dllimport)
+	#endif
+#else
+	#define DIRENT_API
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-	#if defined(DIRENT_EXPORTS)
-		#define DIRENT_API __declspec(dllexport)
-	#else
-		#define DIRENT_API __declspec(dllimport)
-	#endif
 
 	typedef struct DIR DIR;
 
