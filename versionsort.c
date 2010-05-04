@@ -54,6 +54,7 @@ extern "C" {
 		return n;
 	}
 
+
 	DIRENT_API
 	int versionsort(const void *da, const void *db) {
 
@@ -71,7 +72,10 @@ extern "C" {
 			(((blcp>=-1) && (blcp != (bldp-1)))) &&
 				((alcp == blcp)) &&
 					((strncmp(a,b,alcp+1)==0))) {
-			return atoi(a+alcp+1) < atoi(b+blcp+1);
+						int l = atoi(a+alcp+1);
+						int r = atoi(b+blcp+1);
+						
+			return l-r;
 		}
 
 		return strcmp(a,b);

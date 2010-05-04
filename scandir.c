@@ -36,17 +36,13 @@ extern "C" {
 
 		struct dirent *dirent = NULL;
 
-		if((dirent = malloc(sizeof(struct dirent)))) {
+		if((dirent = (struct dirent *)malloc(sizeof(struct dirent) + src->d_namlen + 1 ))) {
 			
 			*dirent = *src;
-			if((dirent->d_name = malloc(dirent->d_namlen+1))) {
-				strcpy_s(dirent->d_name, dirent->d_namlen+1, src->d_name);
-				*dptr = dirent;
-			}
-			else {
-				free(dirent);
-				dirent = NULL;
-			}
+			dirent->d_name = (char*)(dirent + 1);
+			strcpy_s(dirent->d_name, dirent->d_namlen+1, src->d_name);
+			*dptr = dirent;
+		
 		}
 		return dirent;
 	}
@@ -73,8 +69,8 @@ extern "C" {
 			if(filter && !filter(dirent))
 				continue;
 			else if((*namelist = realloc(*namelist, sizeof(struct dirent*) * (len+1)))==NULL)
-				goto exit_err; /* fixme: leak on ENOMEM */
-			else if(!new_dirent(*namelist + len, dirent))
+				goto exit_err; /* FIXME: leak on ENOMEM*/
+			else if(!new_dirent((*namelist) + len, dirent))
 				goto exit_err;
 			else
 				++len;
@@ -87,7 +83,13 @@ extern "C" {
 		return len;
 
 exit_err:
-		/*** TODO: CLEANUP ***/
+		
+		if(*namelist) {
+			for(--len;len>=0;len--)
+				free(*((*namelist) + len));
+			free( *namelist );
+		}
+
 		closedir(dir);
 		return -1;
 	}
