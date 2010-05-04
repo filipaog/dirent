@@ -241,6 +241,10 @@
 				RelativePath="..\LICENSE.txt"
 				>
 			</File>
+			<File
+				RelativePath="..\README.txt"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
