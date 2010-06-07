@@ -27,6 +27,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "dirent_intern.h"
 
+#if defined(CROSS_SRC)
+    #define strncpy_s(d,dsz,s,ssz) strncpy(d,s,dsz)
+    #define strcpy_s(d,dsz,s) strncpy(d,s,dsz)
+    #define strcat_s(d,dsz,s) strcat(d,s)
+#endif /*** CROSS_SRC ***/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -76,7 +82,7 @@ extern "C" {
 				++len;
 
 		if(compar)
-			qsort(*namelist,len,sizeof(struct dirent*), compar);
+			qsort(*namelist,len,sizeof(struct dirent*), (int(*)(const void*,const void*))compar);
 
 		closedir(dir);
 
