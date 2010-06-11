@@ -1,9 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dirent", "dirent.vcproj", "{8B78801A-E8EE-4F67-BC1A-3FE5CD4835B5}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test.vcproj", "{4A781DFA-1893-470E-B919-3294FA108BCE}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dirent", "dirent.vcxproj", "{8B78801A-E8EE-4F67-BC1A-3FE5CD4835B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		{8B78801A-E8EE-4F67-BC1A-3FE5CD4835B5}.Debug_DLL|Win32.Build.0 = Debug_DLL|Win32
 		{8B78801A-E8EE-4F67-BC1A-3FE5CD4835B5}.Release_DLL|Win32.ActiveCfg = Release_DLL|Win32
 		{8B78801A-E8EE-4F67-BC1A-3FE5CD4835B5}.Release_DLL|Win32.Build.0 = Release_DLL|Win32
-		{4A781DFA-1893-470E-B919-3294FA108BCE}.Debug_DLL|Win32.ActiveCfg = Release_DLL|Win32
-		{4A781DFA-1893-470E-B919-3294FA108BCE}.Debug_DLL|Win32.Build.0 = Release_DLL|Win32
-		{4A781DFA-1893-470E-B919-3294FA108BCE}.Release_DLL|Win32.ActiveCfg = Release_DLL|Win32
-		{4A781DFA-1893-470E-B919-3294FA108BCE}.Release_DLL|Win32.Build.0 = Release_DLL|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
