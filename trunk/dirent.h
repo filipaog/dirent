@@ -151,8 +151,8 @@ extern "C" {
 	int alphasort(const void *a, const void *b);
 
 	/*****
-	versionsort()
-	GNU Extension
+		versionsort()
+		GNU Extension
 	*****/
 	DIRENT_API
 	int versionsort(const void *a, const void *b);
