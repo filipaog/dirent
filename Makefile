@@ -14,11 +14,8 @@ DEPS =
 
 
 SVNVERSION=${VERSION}.`svnversion`
-PACKAGE=${NAME}-${INTERFACE}
-PACKAGE_STR=CGT ${PACKAGE} v${SVNVERSION}
-PACKAGE_SO=${NAME}.so.${INTERFACE}
-
-CPPFLAGS += -DPACKAGE_STRING=\""${PACKAGE_STR}"\"
+PACKAGE=${NAME}
+PACKAGE_SO=${NAME}.so.0
 
 CROSS_SRC = alphasort.obj closedir.obj opendir.obj readdir.obj readdir_r.obj rewinddir.obj scandir.obj seekdir.obj stubs.obj telldir.obj versionsort.obj
 
@@ -73,9 +70,8 @@ install_win32 : ${PACKAGE}.dll
 	@install ${PACKAGE}.dll ${PREFIX}/bin
 
 install_headers :
-	@echo "installing headers to ${PREFIX}/include/${NAME}-${VERSION}"
-	@mkdir -p ${PREFIX}/include/${NAME}-${VERSION}
-	@install *.h ${PREFIX}/include/${NAME}-${VERSION}
+	@echo "installing headers to ${PREFIX}/include/"
+	@install *.h ${PREFIX}/include/
 
 install_win32_dev : install_win32 ${PACKAGE}.lib ${PACKAGE}.def install_headers
 	@echo "installing ${PACKAGE}.lib to ${PREFIX}/lib"
