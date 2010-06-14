@@ -1,7 +1,7 @@
 ## you should only need edit these first 4 variables.
 
 # base name of package
-NAME=dirent
+NAME=libdirent
 
 # Software version
 VERSION=0.2
